@@ -39,7 +39,7 @@ const CheeseSchema = new mongoose.Schema({
   image: String,
 });
 
-const People = mongoose.model("Cheese", CheeseSchema);
+const Cheese = mongoose.model("Cheese", CheeseSchema);
 
 ///////////////////////////////
 // MiddleWare
@@ -91,16 +91,25 @@ app.put("/cheese/:id", async (req, res) => {
     }
   });
   
-  // CHEESE DELETE ROUTE
-  app.delete("/cheese/:id", async (req, res) => {
+// CHEESE DELETE ROUTE
+app.delete("/cheese/:id", async (req, res) => {
     try {
-      // send all cheese
-      res.json(await Cheese.findByIdAndRemove(req.params.id));
+        // send all cheese
+        res.json(await Cheese.findByIdAndRemove(req.params.id));
     } catch (error) {
-      //send error
-      res.status(400).json(error);
+        //send error
+        res.status(400).json(error);
     }
-  });
+});
+
+  // CHEESE SHOW ROUTE
+  app.get("/cheese/:id", async (req, res) => {
+    try {
+        res.json(await Cheese.findById(req.params.id));
+    } catch (error) {
+        res.status(400).json(error);
+    }
+  })
 
 ///////////////////////////////
 // LISTENER
